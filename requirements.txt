@@ -1,0 +1,7 @@
+-e git+https://github.com/Sparrho/bungiesearch.git@ede6a47e189320c60bb6b8c861af7424d4cf0811#egg=bungiesearch
+
+celery==3.1.18
+Django==1.8.3
+django-celery==3.1.16
+flake8==2.4.0
+tox==2.1.1
