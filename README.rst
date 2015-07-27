@@ -33,7 +33,7 @@ Usage
 
  INSTALLED_APPS = [
      # ..
-     'celery-bungiesearch',
+     'celery_bungiesearch',
  ]
 
 2. Add ``CelerySignalProcessor`` to ``settings.BUNGIESEARCH['SIGNAL_CLASS']`` in settings. This will ensure that any model that's managed by a ``BungiesearchManager`` acquire ``CelerySignalProcessor`` as the signal processor.

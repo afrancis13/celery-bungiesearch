@@ -1,4 +1,4 @@
--e git+https://github.com/Sparrho/bungiesearch.git@ede6a47e189320c60bb6b8c861af7424d4cf0811#egg=bungiesearch
+-e git+https://github.com/afrancis13/bungiesearch.git@9b19e80da491e4f83bb4ce84691d803316602c6f#egg=bungiesearch
 
 celery==3.1.18
 Django==1.8.3

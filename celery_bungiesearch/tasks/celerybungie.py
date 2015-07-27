@@ -1,5 +1,5 @@
 from django.conf import settings
-from ..enqueue import get_celery_task
+from ..utils import get_celery_task
 
 CeleryTask = get_celery_task()
 
