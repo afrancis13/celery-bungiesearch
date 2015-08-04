@@ -19,7 +19,7 @@ class CeleryIndexTask(CeleryBungieTask):
 
         if action == 'save':
             indexing_query = get_model_indexing_query(model_class)
-            should_index = indexing_query.filter(id=instance.id).exists()
+            should_index = indexing_query.filter(pk=instance.pk).exists()
 
             if should_index:
                 update_index([instance], model_name)

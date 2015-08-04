@@ -1,8 +1,8 @@
 from bungiesearch import Bungiesearch
 from bungiesearch.signals import BungieSignalProcessor
-from django.db.models import signals
+from django.db.models.signals import post_save, pre_delete
 
-from .enqueue import get_update_task
+from .utils import get_update_task
 
 
 class CelerySignalProcessor(BungieSignalProcessor):
@@ -31,30 +31,10 @@ class CelerySignalProcessor(BungieSignalProcessor):
 
         get_update_task().delay(action, instance)
 
-    def setup(self, model=None, models=[], setup_managed=False):
-        connect_models = [model]
-        if models:
-            connect_models = models
-        elif setup_managed:
-            model_names = [mdl for index in Bungiesearch.get_indices()
-                           for mdl in Bungiesearch.get_models(index)]
-            connect_models = [Bungiesearch.get_model_index(model_str).get_model()
-                              for model_str in model_names]
+    def setup(self, model):
+        post_save.connect(self.enqueue_save, sender=model)
+        pre_delete.connect(self.enqueue_delete, sender=model)
 
-        for connect_model in connect_models:
-            signals.post_save.connect(self.enqueue_save, sender=connect_model)
-            signals.pre_delete.connect(self.enqueue_delete, sender=connect_model)
-
-    def teardown(self, model=None, models=[], teardown_managed=False):
-        disconnect_models = [model]
-        if models:
-            disconnect_models = models
-        elif teardown_managed:
-            model_names = [mdl for index in Bungiesearch.get_indices()
-                           for mdl in Bungiesearch.get_models(index)]
-            disconnect_models = [Bungiesearch.get_model_index(model_str).get_model()
-                                 for model_str in model_names]
-
-        for disconnect_model in disconnect_models:
-            signals.pre_delete.disconnect(self.enqueue_delete, sender=disconnect_model)
-            signals.post_save.disconnect(self.enqueue_save, sender=disconnect_model)
+    def teardown(self, model):
+        post_save.disconnect(self.enqueue_save, sender=model)
+        pre_delete.disconnect(self.enqueue_delete, sender=model)

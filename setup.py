@@ -9,8 +9,12 @@ __versionstr__ = '.'.join(map(str, VERSION))
 
 install_requires = [
     'Django>=1.4.3',
-    'bungiesearch>=1.1.0',
     'celery==3.1.18'
+]
+
+commit_id = '9b19e80da491e4f83bb4ce84691d803316602c6f'
+dependency_links = [
+    'git+ssh://git@github.com:afrancis13/bungiesearch.git@%s#egg=bungiesearch' % commit_id
 ]
 
 
@@ -33,4 +37,5 @@ setup(
         'Programming Language :: Python :: 2.7'
     ],
     install_requires=install_requires,
+    dependency_links=dependency_links
 )
