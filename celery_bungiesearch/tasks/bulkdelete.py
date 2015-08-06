@@ -7,12 +7,12 @@ from elasticsearch import TransportError
 
 class BulkDeleteTask(CeleryBungieTask):
 
-    def run(self, model, instances, **kwargs):
+    def run(self, model, instance_pks, **kwargs):
         settings = Bungiesearch.BUNGIE.get('SIGNALS', {})
         buffer_size = settings.get('BUFFER_SIZE', 100)
 
         try:
-            update_index(instances, model.__name__, action='delete', bulk_size=buffer_size)
+            update_index(instance_pks, model.__name__, action='delete', bulk_size=buffer_size)
         except TransportError as e:
             if e.status_code == 404:
                 return
