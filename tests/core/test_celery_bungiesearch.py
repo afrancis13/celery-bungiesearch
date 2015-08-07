@@ -180,9 +180,9 @@ class SignalTest(TestCase):
         self.assertEqual(len(two_result_check), 2,
             'Search did not return exactly 2 users (got {})'.format(len(two_result_check)))
 
-        model_items = [first_user, second_user]
+        model_item_pks = [first_user.pk, second_user.pk]
 
-        BulkDeleteTask().delay(User, model_items)
+        BulkDeleteTask().delay(User, model_item_pks)
 
         empty_set_check = User.objects.search.query('match', name='Peanut')
         self.assertEqual(len(empty_set_check), 0,
