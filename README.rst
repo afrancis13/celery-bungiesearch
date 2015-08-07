@@ -1,7 +1,8 @@
 ===================
 celery-bungiesearch
 ===================
-.. image:: https://travis-ci.org/afrancis13/celery-bungiesearch.svg
+.. image:: https://travis-ci.org/afrancis13/celery-bungiesearch.svg?branch=master
+    :target: https://travis-ci.org/afrancis13/celery-bungiesearch
 
 A repository that wraps the provided Bungiesearch signal processing class
 in your own celery tasks.
