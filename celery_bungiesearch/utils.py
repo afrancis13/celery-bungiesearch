@@ -25,7 +25,10 @@ def get_update_task(task_path=None, as_class=False):
     ''' Helper function to get settings.CELERY_BUNGIESEARCH_TASK, or task_path,
         if provided.
     '''
-    import_path = task_path or settings.CELERY_BUNGIESEARCH_TASK
+    default_task_path = 'celery_bungiesearch.tasks.celeryindex.CeleryIndexTask'
+    custom_task = getattr(settings, 'CELERY_BUNGIESEARCH_TASK', default_task_path)
+    import_path = task_path or custom_task
+
     module, attr = import_path.rsplit('.', 1)
     try:
         mod = import_module(module)

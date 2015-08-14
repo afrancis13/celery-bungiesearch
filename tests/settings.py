@@ -55,4 +55,3 @@ CELERYD_LOG_LEVEL = 'ERROR'
 CELERY_DEFAULT_QUEUE = 'celery-bungiesearch'
 CELERY_BUNGIESEARCH_QUEUE = Queue('default', Exchange('default'), routing_key='default')
 CELERY_BUNGIESEARCH_CUSTOM_TASK = 'tests.core.custom_task.CustomTask'
-CELERY_BUNGIESEARCH_TASK = 'celery_bungiesearch.tasks.celeryindex.CeleryIndexTask'

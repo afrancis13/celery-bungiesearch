@@ -23,7 +23,7 @@ Install
 Requirements
 ------------
 * Django 1.4.3+
-* Bungiesearch_ 1.1.0+
+* Bungiesearch_ 1.2.1+
 * Celery_ 3.1.18+
 
 Usage
@@ -51,14 +51,15 @@ Usage
     }
 }
 
-3. Add celery-bungisearch configuration variables to your settings file. The task below is the default version, but you may include your own custom class if you desire:
+3. Add celery-bungisearch configuration variables to your settings file. The task below is the default version, but you may include your own custom classes if you desire (note that none of these environment variable are required, and can be entirely excluded from the settings file):
 
 .. code-block:: python
 
  CELERY_BUNGIESEARCH_QUEUE = None
- CELERY_BUNGIESEARCH_TASK = 'celery_bungiesearch.tasks.celeryindex.CeleryIndexTask'
+ CELERY_BUNGIESEARCH_TASK = 'Your custom index task path'
+ CELERY_BUNGIESEARCH_CUSTOM_TASK = 'Your custom celery task path'
 
-3. Ensure your Celery instance is running.
+4. Ensure your Celery instance is running.
 
 Testing
 -------
