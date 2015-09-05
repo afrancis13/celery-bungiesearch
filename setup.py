@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
-VERSION = (1, 1, 0)
+VERSION = (1, 1, 1)
 __version__ = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
 
@@ -20,6 +20,10 @@ with open('README.rst') as f:
 
 setup(
     name='celery-bungiesearch',
+    packages=find_packages(
+        where='.',
+        exclude=('celery-bungiesearch/tests',)
+    ),
     version=__versionstr__,
     license='MIT',
     description='Celery signal processor for Bungiesearch',
