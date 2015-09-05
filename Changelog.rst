@@ -3,6 +3,10 @@ Changelog
 
 1.1.0
 ------------------
+* Fixes bug in the setup file
+
+1.1.0
+------------------
 Updates ``celery-bungiesearch`` to be compatible with the most up to date version of bungiesearch (1.2.1 as of 8/13/2015).
 
 * The setup and teardown methods in the signal processor reflect the mechanism by which bungiesearch performs signal processing
