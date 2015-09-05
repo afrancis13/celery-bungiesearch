@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 
-VERSION = (1, 1, 3)
+VERSION = (1, 1, 4)
 __version__ = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
 
@@ -22,7 +22,7 @@ setup(
     name='celery-bungiesearch',
     packages=find_packages(
         where='.',
-        exclude=('tests/',)
+        exclude=('./tests',)
     ),
     version=__versionstr__,
     license='MIT',
