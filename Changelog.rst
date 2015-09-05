@@ -1,9 +1,9 @@
 Changelog
 =========
 
-1.1.0
+1.1.2
 ------------------
-* Fixes bug in the setup file
+* Fixes bug in the setup.py file from 1.1.0 release
 
 1.1.0
 ------------------
