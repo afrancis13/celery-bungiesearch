@@ -50,4 +50,8 @@ def get_model_index(model):
 
 
 def get_model_indexing_query(model):
-    return Bungiesearch().get_model_index(model.__name__).Meta.indexing_query
+    return getattr(
+        Bungiesearch().get_model_index(model.__name__).Meta,
+        'indexing_query',
+        model.objects.all()
+    )
