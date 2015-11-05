@@ -3,6 +3,7 @@ from bungiesearch import Bungiesearch
 from bungiesearch.utils import update_index
 
 from elasticsearch import TransportError
+from elasticsearch.helpers import BulkIndexError
 
 
 class BulkDeleteTask(CeleryBungieTask):
@@ -13,6 +14,13 @@ class BulkDeleteTask(CeleryBungieTask):
 
         try:
             update_index(instance_pks, model.__name__, action='delete', bulk_size=buffer_size)
+
+        except BulkIndexError as e:
+            for error in e.errors:
+                if error['delete'] and error['delete']['status'] == 404:
+                    continue
+                raise
+
         except TransportError as e:
             if e.status_code == 404:
                 return

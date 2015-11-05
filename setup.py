@@ -2,13 +2,13 @@
 from setuptools import setup, find_packages
 
 
-VERSION = (1, 1, 4)
+VERSION = (1, 1, 5)
 __version__ = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
 
 
 install_requires = [
-    'bungiesearch>=1.2.1',
+    'bungiesearch>=1.2.2',
     'celery==3.1.18',
     'Django>=1.4.3',
 ]

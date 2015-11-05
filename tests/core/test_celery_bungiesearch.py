@@ -23,6 +23,10 @@ class SignalTest(TestCase):
     def tearDown(self):
         call_command('search_index', action='delete', confirmed='guilty-as-charged')
 
+    def assertResultsLength(self, results, expected):
+        msg = 'Search did not return exactly 2 users (got {})'.format(len(results))
+        self.assertEqual(len(results), expected, msg)
+
     def test_signal_processor(self):
         self.assertTrue(isinstance(signal_processor, CelerySignalProcessor),
             'signal_processor is not an instance of CelerySignalProcessor')
@@ -177,16 +181,13 @@ class SignalTest(TestCase):
         second_user = User.objects.create(**peanut_butter_and_jelly)
 
         two_result_check = User.objects.search.query('match', name='Peanut')
-        self.assertEqual(len(two_result_check), 2,
-            'Search did not return exactly 2 users (got {})'.format(len(two_result_check)))
+        self.assertResultsLength(two_result_check, 2)
 
         model_item_pks = [first_user.pk, second_user.pk]
-
         BulkDeleteTask().delay(User, model_item_pks)
 
         empty_set_check = User.objects.search.query('match', name='Peanut')
-        self.assertEqual(len(empty_set_check), 0,
-            'Search did not return exactly 0 users (got {})'.format(len(empty_set_check)))
+        self.assertResultsLength(empty_set_check, 0)
 
     def test_indexing_queryset(self):
         fake = {
