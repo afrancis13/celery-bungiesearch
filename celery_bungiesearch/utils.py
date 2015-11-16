@@ -1,12 +1,8 @@
 from bungiesearch import Bungiesearch
+from celery.task import Task as CeleryTask
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
-
-if not getattr(settings, 'CELERY_ALWAYS_EAGER', False):
-    from djcelery_transactions import PostTransactionTask as CeleryTask
-else:
-    from celery.task import Task as CeleryTask
 
 
 def get_celery_task():
