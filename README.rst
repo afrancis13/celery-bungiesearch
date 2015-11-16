@@ -28,7 +28,7 @@ Requirements
 
 Usage
 -----
-1. Add ``'celery_bungiesearch'`` to ``INSTALLED_APPS`` in settings
+\1. Add ``'celery_bungiesearch'`` to ``INSTALLED_APPS`` in settings
 
 .. code-block:: python
 
@@ -37,11 +37,11 @@ Usage
      'celery_bungiesearch',
  ]
 
-2. Add ``CelerySignalProcessor`` to ``settings.BUNGIESEARCH['SIGNAL_CLASS']`` in settings. This will ensure that any model that's managed by a ``BungiesearchManager`` acquire ``CelerySignalProcessor`` as the signal processor.
+\2. Add ``CelerySignalProcessor`` to ``settings.BUNGIESEARCH['SIGNAL_CLASS']`` in settings. This will ensure that any model that's managed by a ``BungiesearchManager`` acquire ``CelerySignalProcessor`` as the signal processor.
 
 .. code-block:: python
 
- from celery_bungiesearch import CelerySignalProcessor 
+ from celery_bungiesearch import CelerySignalProcessor
 
  BUNGIESEARCH = {
     # ..
@@ -49,9 +49,9 @@ Usage
         'SIGNAL_CLASS': 'celery_bungiesearch.signals.CelerySignalProcessor',
         'BUFFER_SIZE' : 100
     }
-}
+ }
 
-3. Add celery-bungisearch configuration variables to your settings file. The task below is the default version, but you may include your own custom classes if you desire (note that none of these environment variable are required, and can be entirely excluded from the settings file):
+\3. Add celery-bungisearch configuration variables to your settings file. The task below is the default version, but you may include your own custom classes if you desire (note that none of these environment variable are required, and can be entirely excluded from the settings file):
 
 .. code-block:: python
 
@@ -59,7 +59,7 @@ Usage
  CELERY_BUNGIESEARCH_TASK = 'Your custom index task path'
  CELERY_BUNGIESEARCH_CUSTOM_TASK = 'Your custom celery task path'
 
-4. Ensure your Celery instance is running.
+\4. Ensure your Celery instance is running.
 
 Testing
 -------
