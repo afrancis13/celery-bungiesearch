@@ -1,9 +1,9 @@
-from .celerybungie import CeleryBungieTask
 from bungiesearch import Bungiesearch
 from bungiesearch.utils import update_index
-
 from elasticsearch import TransportError
 from elasticsearch.helpers import BulkIndexError
+
+from .celerybungie import CeleryBungieTask
 
 
 class BulkDeleteTask(CeleryBungieTask):
@@ -13,7 +13,8 @@ class BulkDeleteTask(CeleryBungieTask):
         buffer_size = settings.get('BUFFER_SIZE', 100)
 
         try:
-            update_index(instance_pks, model.__name__, action='delete', bulk_size=buffer_size)
+            update_index(instance_pks, model.__name__,
+                action='delete', bulk_size=buffer_size, refresh=False)
 
         except BulkIndexError as e:
             for error in e.errors:

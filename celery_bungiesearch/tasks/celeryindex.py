@@ -1,6 +1,6 @@
-from ..utils import get_model_indexing_query
 from bungiesearch.utils import delete_index_item, update_index
 
+from ..utils import get_model_indexing_query
 from .celerybungie import CeleryBungieTask
 
 
@@ -22,9 +22,9 @@ class CeleryIndexTask(CeleryBungieTask):
             should_index = indexing_query.filter(pk=instance.pk).exists()
 
             if should_index:
-                update_index([instance], model_name)
+                update_index([instance], model_name, refresh=False)
             else:
                 delete_index_item(instance, model_name)
 
         elif action == 'delete':
-            delete_index_item(instance, model_name)
+            delete_index_item(instance, model_name, refresh=False)

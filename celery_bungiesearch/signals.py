@@ -9,6 +9,18 @@ class CelerySignalProcessor(BungieSignalProcessor):
 
     ALLOWED_ACTIONS = ('save', 'delete')
 
+    def __init__(self, *args, **kwargs):
+        super(CelerySignalProcessor, self).__init__(*args, **kwargs)
+        self.update_task = get_update_task()
+
+    def setup(self, model):
+        post_save.connect(self.enqueue_save, sender=model)
+        pre_delete.connect(self.enqueue_delete, sender=model)
+
+    def teardown(self, model):
+        post_save.disconnect(self.enqueue_save, sender=model)
+        pre_delete.disconnect(self.enqueue_delete, sender=model)
+
     def enqueue_save(self, sender, instance, **kwargs):
         return self.enqueue('save', sender, instance, **kwargs)
 
@@ -29,12 +41,4 @@ class CelerySignalProcessor(BungieSignalProcessor):
         if action not in self.ALLOWED_ACTIONS:
             raise ValueError("Unrecognized action %s" % action)
 
-        get_update_task().delay(action, instance)
-
-    def setup(self, model):
-        post_save.connect(self.enqueue_save, sender=model)
-        pre_delete.connect(self.enqueue_delete, sender=model)
-
-    def teardown(self, model):
-        post_save.disconnect(self.enqueue_save, sender=model)
-        pre_delete.disconnect(self.enqueue_delete, sender=model)
+        self.update_task.delay(action, instance)
