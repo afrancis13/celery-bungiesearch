@@ -1,7 +1,6 @@
+import logging
 import os
 import sys
-
-import logging
 
 from celery import Celery
 from kombu import Exchange, Queue
@@ -39,7 +38,7 @@ MIDDLEWARE_CLASSES = ()
 DEFAULT_INDEX_TABLESPACE = ''
 
 BUNGIESEARCH = {
-    'URLS': [os.getenv('ELASTIC_SEARCH_URL')],
+    'URLS': [os.getenv('ELASTIC_SEARCH_URL', 'http://127.0.0.1:9200')],
     'INDICES': {'celery_bungiesearch_demo': 'core.indices'},
     'SIGNALS': {
         'SIGNAL_CLASS': 'celery_bungiesearch.signals.CelerySignalProcessor',
