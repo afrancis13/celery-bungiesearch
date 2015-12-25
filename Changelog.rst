@@ -1,5 +1,12 @@
 Changelog
 =========
+1.2.1
+------------------
+* Bug fixes, do not force refresh the index when running tasks.
+
+1.2.0
+------------------
+* Fixing bulk delete task and removing dependency on djcelery_transactions.
 
 1.1.4
 ------------------
@@ -16,5 +23,4 @@ Updates ``celery-bungiesearch`` to be compatible with the most up to date versio
 
 1.0.0
 ------------------
-
 Initial release.
