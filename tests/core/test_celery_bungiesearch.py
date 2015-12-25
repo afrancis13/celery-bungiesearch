@@ -3,14 +3,12 @@ from datetime import datetime
 import pytz
 from bungiesearch import Bungiesearch
 from bungiesearch.signals import get_signal_processor
+from celery_bungiesearch import CelerySignalProcessor
+from celery_bungiesearch.tasks import BulkDeleteTask, CeleryBungieTask
 from django.core.management import call_command
 from django.test import TestCase
 
 from core.models import User
-from celery_bungiesearch import CelerySignalProcessor
-
-from celery_bungiesearch.tasks import BulkDeleteTask
-
 
 signal_processor = get_signal_processor()
 
@@ -32,6 +30,27 @@ class SignalTest(TestCase):
     def test_signal_processor(self):
         self.assertTrue(isinstance(signal_processor, CelerySignalProcessor),
             'signal_processor is not an instance of CelerySignalProcessor')
+
+    def test_force_refresh(self):
+        jane_doe = {
+            'name': 'Jane Doe',
+            'user_id': 'jdoe1',
+            'updated': self.updated
+        }
+
+        previous = CeleryBungieTask.refresh
+        try:
+            CeleryBungieTask.refresh = True
+            user = User.objects.create(**jane_doe)
+        finally:
+            CeleryBungieTask.refresh = previous
+
+        result = User.objects.search.query('match', name='Jane')
+        self.assertEqual(len(result), 1)
+
+        BulkDeleteTask().delay(User, [user.pk], refresh=True)
+        result = User.objects.search.query('match', name='Jane')
+        self.assertEqual(len(result), 0)
 
     def test_save(self):
         error_message_len = (lambda w, x, y, z:

@@ -15,16 +15,18 @@ class CeleryIndexTask(CeleryBungieTask):
         model_name = model_class.__name__
 
         if action not in ('save', 'delete'):
-            raise ValueError("Unrecognized action: %s" % action)
+            raise ValueError('Unrecognized action: %s' % action)
+
+        refresh = kwargs.get('refresh', self.refresh)
 
         if action == 'save':
             indexing_query = get_model_indexing_query(model_class)
             should_index = indexing_query.filter(pk=instance.pk).exists()
 
             if should_index:
-                update_index([instance], model_name, refresh=False)
+                update_index([instance], model_name, refresh=refresh)
             else:
                 delete_index_item(instance, model_name)
 
         elif action == 'delete':
-            delete_index_item(instance, model_name, refresh=False)
+            delete_index_item(instance, model_name, refresh=refresh)
