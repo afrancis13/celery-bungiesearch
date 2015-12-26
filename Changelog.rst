@@ -1,5 +1,9 @@
 Changelog
 =========
+1.2.3
+------------------
+* Provide a simple mechanism for tests to run with refresh behavior.
+
 1.2.2
 ------------------
 * Bug fixes, do not force refresh the index when running tasks.
