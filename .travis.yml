@@ -10,3 +10,5 @@ script:
   - export ELASTIC_SEARCH_URL=localhost
   - flake8 .
   - python tests/manage.py test
+notifications:
+  email: false
