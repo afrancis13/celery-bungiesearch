@@ -1,5 +1,9 @@
 Changelog
 =========
+1.2.4
+------------------
+* Django 1.9 compatibility
+
 1.2.3
 ------------------
 * Provide a simple mechanism for tests to run with refresh behavior.
