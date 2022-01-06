@@ -9,7 +9,7 @@ __versionstr__ = '.'.join(map(str, VERSION))
 
 install_requires = [
     'bungiesearch>=1.2.2',
-    'celery==3.1.18',
+    'celery==5.2.2',
     'Django>=1.4.3',
 ]
 
